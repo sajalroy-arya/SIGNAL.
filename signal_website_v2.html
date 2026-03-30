@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SIGNAL. — Your mind's frequency log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+/* ═══ RESET ═══ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
+  background: #0C0B10;
+  color: #F2EDE4;
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+img, svg { max-width: 100%; }
+
+/* ═══ VARIABLES ═══ */
+:root {
+  --dark:   #0C0B10;
+  --dark2:  #13121A;
+  --dark3:  #1C1A26;
+  --cream:  #F2EDE4;
+  --cream2: #E8E0D4;
+  --muted:  #7A7570;
+  --faint:  #3A3840;
+  --acc:    #D4541A;
+  --acc2:   #E8693A;
+  --gold:   #C9933A;
+  --gold2:  #E0AB52;
+  --teal:   #1A7A5E;
+  --rule:   rgba(242,237,228,0.08);
+}
+
+/* ═══ NOISE ═══ */
+body::before {
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity:0.5;
+}
+
+/* ═══ SVG ICON SYSTEM ═══ */
+/* All icons are inline SVG paths — no emoji */
+
+/* ═══ NAV ═══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 18px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: all 0.4s ease;
+}
+nav.scrolled {
+  padding: 12px 24px;
+  background: rgba(12,11,16,0.72);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border-bottom: 0.5px solid rgba(242,237,228,0.07);
+}
+.nav-logo {
+  font-family:'Syne',sans-serif; font-size:18px; font-weight:800;
+  color:var(--cream); letter-spacing:-0.02em; text-decoration:none; z-index:1;
+}
+.nav-logo span{color:var(--gold);}
+.nav-links {
+  display:flex; gap:28px; align-items:center;
+}
+@media(max-width:700px){ .nav-links{ display:none; } }
+.nav-links a {
+  font-size:13px; color:rgba(242,237,228,0.45);
+  text-decoration:none; letter-spacing:0.04em; transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--cream);}
+.nav-cta {
+  background:var(--acc); color:#fff; border:none;
+  padding:9px 20px; font-family:'DM Sans',sans-serif;
+  font-size:13px; font-weight:500; border-radius:3px;
+  letter-spacing:0.04em; transition:all 0.2s; text-decoration:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.14);
+  white-space:nowrap;
+}
+.nav-cta:hover{ background:var(--acc2); transform:translateY(-1px); box-shadow:inset 0 1px 0 rgba(255,255,255,0.18), 0 6px 24px rgba(212,84,26,0.3); }
+
+/* ═══ SECTIONS ═══ */
+section{ position:relative; z-index:1; overflow:hidden; }
+
+/* ═══ HERO ═══ */
+.hero {
+  min-height:100svh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:100px 64px 60px;
+  gap:60px;
+  position:relative;
+}
+@media(max-width:900px){
+  .hero{
+    grid-template-columns:1fr;
+    padding:90px 24px 60px;
+    gap:40px;
+    text-align:center;
+  }
+}
+
+.hero-glow {
+  position:absolute; width:500px; height:500px;
+  background:radial-gradient(circle,rgba(212,84,26,0.11) 0%,transparent 70%);
+  top:50%; left:28%; transform:translate(-50%,-50%);
+  pointer-events:none; z-index:0;
+}
+.hero-glow2 {
+  position:absolute; width:300px; height:300px;
+  background:radial-gradient(circle,rgba(201,147,58,0.07) 0%,transparent 70%);
+  top:20%; right:10%; pointer-events:none; z-index:0;
+}
+
+.hero-text{ position:relative; z-index:1; }
+
+.eyebrow {
+  font-size:11px; letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:20px;
+  display:flex; align-items:center; gap:10px;
+}
+@media(max-width:900px){ .eyebrow{ justify-content:center; } }
+.eyebrow::before{ content:''; display:block; width:20px; height:0.5px; background:var(--gold); }
+
+.hero-title {
+  font-family:'Syne',sans-serif;
+  font-size:clamp(44px,6vw,88px);
+  font-weight:800; line-height:0.92;
+  letter-spacing:-0.04em; margin-bottom:24px;
+}
+.hero-title .acc{color:var(--acc);}
+.hero-title .dim{opacity:0.3;}
+
+.hero-sub {
+  font-size:clamp(14px,2vw,16px);
+  color:rgba(242,237,228,0.5); line-height:1.8;
+  max-width:440px; margin-bottom:36px;
+}
+.hero-sub strong{color:var(--cream); font-weight:400;}
+@media(max-width:900px){ .hero-sub{ margin:0 auto 36px; } }
+
+.btn-row{ display:flex; gap:12px; flex-wrap:wrap; }
+@media(max-width:900px){ .btn-row{ justify-content:center; } }
+
+.btn-primary {
+  background:var(--acc); color:#fff; border:none;
+  padding:14px 26px; font-family:'DM Sans',sans-serif;
+  font-size:14px; font-weight:500; border-radius:3px;
+  letter-spacing:0.04em; transition:all 0.25s; text-decoration:none;
+  display:inline-flex; align-items:center; gap:8px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.14);
+}
+.btn-primary:hover{ background:var(--acc2); transform:translateY(-2px); box-shadow:inset 0 1px 0 rgba(255,255,255,0.18),0 8px 28px rgba(212,84,26,0.35); }
+
+.btn-ghost {
+  background:transparent; color:rgba(242,237,228,0.55);
+  border:0.5px solid rgba(242,237,228,0.18);
+  padding:14px 26px; font-family:'DM Sans',sans-serif;
+  font-size:14px; border-radius:3px; letter-spacing:0.04em;
+  transition:all 0.25s; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+}
+.btn-ghost:hover{ color:var(--cream); border-color:rgba(242,237,228,0.35); background:rgba(242,237,228,0.05); }
+
+.hero-meta {
+  margin-top:44px; display:flex; gap:28px; flex-wrap:wrap;
+  border-top:0.5px solid var(--rule); padding-top:28px;
+}
+@media(max-width:900px){ .hero-meta{ justify-content:center; } }
+.meta-val{ font-family:'Syne',sans-serif; font-size:26px; font-weight:700; line-height:1; margin-bottom:3px; }
+.meta-val span{color:var(--acc);}
+.meta-lbl{ font-size:11px; color:rgba(242,237,228,0.35); letter-spacing:0.05em; }
+
+/* ═══ 3D JOURNAL ═══ */
+.journal-stage {
+  display:flex; align-items:center; justify-content:center;
+  height:60vh; min-height:340px;
+  perspective:900px; perspective-origin:50% 50%;
+  position:relative; z-index:1;
+}
+@media(max-width:900px){ .journal-stage{ height:44vh; min-height:280px; } }
+
+.journal-3d {
+  width:180px; height:252px;
+  position:relative; transform-style:preserve-3d;
+  transform:rotateX(8deg) rotateY(-28deg) rotateZ(1deg);
+  animation:float 6s ease-in-out infinite;
+  transition:transform 0.8s cubic-bezier(0.23,1,0.32,1);
+}
+@media(max-width:900px){ .journal-3d{ width:150px; height:210px; } }
+@keyframes float{
+  0%,100%{transform:rotateX(8deg) rotateY(-28deg) rotateZ(1deg) translateY(0);}
+  50%{transform:rotateX(6deg) rotateY(-24deg) rotateZ(0.5deg) translateY(-12px);}
+}
+
+.j-face{ position:absolute; border-radius:3px; backface-visibility:hidden; }
+
+.j-cover {
+  width:180px; height:252px; background:#13121A;
+  border:0.5px solid rgba(242,237,228,0.1);
+  transform:translateZ(12px);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:18px; overflow:hidden;
+}
+@media(max-width:900px){ .j-cover,.j-back{ width:150px; height:210px; } }
+.j-cover::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.025) 0%,transparent 50%,rgba(0,0,0,0.08) 100%);
+}
+
+.j-cover-wave{ position:absolute; top:16px; left:0; right:0; opacity:0.07; }
+.j-cover-edition{ font-size:6px; color:rgba(201,147,58,0.45); letter-spacing:0.2em; text-transform:uppercase; position:relative; z-index:1; margin-bottom:2px; }
+.j-cover-title{ font-family:'Syne',sans-serif; font-size:28px; font-weight:800; color:#F2EDE4; line-height:0.9; letter-spacing:-0.03em; position:relative; z-index:1; }
+.j-cover-title span{color:#C9933A;}
+.j-cover-rule{ width:100%; height:0.4px; background:#C9933A; opacity:0.3; margin:7px 0; position:relative; z-index:1; }
+.j-cover-sub{ font-size:6.5px; color:rgba(242,237,228,0.28); font-style:italic; letter-spacing:0.06em; position:relative; z-index:1; }
+
+.j-back {
+  width:180px; height:252px; background:#0F0E14;
+  border:0.5px solid rgba(242,237,228,0.05);
+  transform:translateZ(-12px) rotateY(180deg);
+  display:flex; align-items:center; justify-content:center;
+}
+.j-back-logo{ font-family:'Syne',sans-serif; font-size:9px; font-weight:700; color:rgba(242,237,228,0.1); letter-spacing:0.3em; }
+
+.j-spine {
+  width:24px; height:252px;
+  background:linear-gradient(180deg,#1C1820 0%,#16141C 50%,#1C1820 100%);
+  transform:rotateY(-90deg) translateZ(0) translateX(-12px);
+  border-left:0.5px solid rgba(242,237,228,0.04);
+  display:flex; align-items:center; justify-content:center;
+}
+@media(max-width:900px){ .j-spine{ width:20px; height:210px; } }
+.j-spine-text{ font-family:'Syne',sans-serif; font-size:7.5px; font-weight:700; color:rgba(201,147,58,0.35); letter-spacing:0.28em; writing-mode:vertical-rl; text-transform:uppercase; }
+
+.j-pages {
+  width:176px; height:248px;
+  background:linear-gradient(to right,#E0D8CC 0%,#F2EDE4 25%,#E8E0D4 55%,#F0EAE0 80%,#E4DCD0 100%);
+  transform:translateZ(10px) translateX(2px); border-radius:0 2px 2px 0;
+}
+@media(max-width:900px){ .j-pages{ width:147px; height:207px; } }
+
+.j-edge-top { width:180px; height:24px; background:linear-gradient(180deg,#2E2B26 0%,#C9933A 35%,#1C1A17 100%); transform:rotateX(90deg) translateZ(0) translateY(-12px); opacity:0.65; }
+.j-edge-bottom { width:180px; height:24px; background:linear-gradient(0deg,#1C1A17 0%,#B8842A 45%,#2E2B26 100%); transform:rotateX(-90deg) translateZ(0) translateY(12px); opacity:0.55; }
+
+.j-ribbon { position:absolute; width:3px; height:34px; background:linear-gradient(180deg,#C9933A,#A8742A); bottom:-17px; right:40px; transform:translateZ(12px); border-radius:0 0 2px 2px; z-index:10; }
+.j-ribbon::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:0; height:0; border-left:3.5px solid transparent; border-right:3.5px solid transparent; border-top:5px solid #A8742A; }
+
+.journal-glow { position:absolute; width:180px; height:50px; background:radial-gradient(ellipse,rgba(212,84,26,0.22) 0%,transparent 70%); bottom:12%; left:50%; transform:translateX(-50%); pointer-events:none; animation:glowpulse 6s ease-in-out infinite; }
+@keyframes glowpulse{ 0%,100%{opacity:0.5;transform:translateX(-50%) scaleX(1);} 50%{opacity:0.9;transform:translateX(-50%) scaleX(1.2);} }
+
+/* Floating dots */
+.f-dot { position:absolute; border-radius:50%; animation:fdot linear infinite; }
+@keyframes fdot{ 0%{transform:translateY(60vh);opacity:0;} 10%{opacity:1;} 90%{opacity:1;} 100%{transform:translateY(-80px);opacity:0;} }
+
+/* ═══ WAVE DIVIDER ═══ */
+.wdiv{ width:100%; overflow:hidden; opacity:0.1; line-height:0; z-index:1; position:relative; }
+.wdiv svg{ width:100%; display:block; }
+
+/* ═══ TRUTH ═══ */
+.truth-section {
+  padding:100px 64px;
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:80px; align-items:center;
+}
+@media(max-width:900px){ .truth-section{ grid-template-columns:1fr; padding:72px 24px; gap:48px; } }
+
+.sec-label {
+  font-size:11px; letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--acc); display:flex; align-items:center; gap:10px; margin-bottom:20px;
+}
+.sec-label::before{ font-family:'Syne',sans-serif; font-size:9px; color:rgba(242,237,228,0.18); }
+.sec-label.l01::before{content:'01';}
+.sec-label.l02::before{content:'02';}
+.sec-label.l03::before{content:'03';}
+.sec-label.l04::before{content:'04';}
+.sec-label.l05::before{content:'05';}
+.sec-label.gold{color:var(--gold);}
+.sec-label.gold::before{color:rgba(242,237,228,0.18);}
+.sec-label.teal{color:var(--teal);}
+.sec-label.dim{color:rgba(242,237,228,0.28);}
+
+.sec-title {
+  font-family:'Syne',sans-serif; font-size:clamp(30px,4vw,52px);
+  font-weight:700; line-height:1.05; letter-spacing:-0.02em; margin-bottom:20px;
+}
+.sec-title em{color:var(--acc); font-style:normal;}
+
+.sec-body { font-size:15px; color:rgba(242,237,228,0.48); line-height:1.8; margin-bottom:16px; }
+.sec-body strong{color:var(--cream); font-weight:400;}
+
+.stats-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1px; background:rgba(242,237,228,0.05);
+  border-radius:12px; overflow:hidden;
+}
+.stat-box{ background:var(--dark2); padding:24px 20px; }
+.stat-val{ font-family:'Syne',sans-serif; font-size:34px; font-weight:800; line-height:1; margin-bottom:6px; }
+.stat-box:nth-child(1) .stat-val{color:var(--acc);}
+.stat-box:nth-child(2) .stat-val{color:var(--gold);}
+.stat-box:nth-child(3) .stat-val{color:var(--teal);}
+.stat-box:nth-child(4) .stat-val{color:rgba(242,237,228,0.6);}
+.stat-lbl{font-size:12px;color:rgba(242,237,228,0.3);line-height:1.55;}
+
+/* ═══ BOOK VIEWER ═══ */
+.book-section {
+  padding:100px 64px;
+  background:var(--dark2);
+  position:relative;
+}
+@media(max-width:900px){ .book-section{ padding:72px 0 60px; } }
+
+.book-section::before{
+  content:''; position:absolute;
+  width:600px; height:600px;
+  background:radial-gradient(circle,rgba(201,147,58,0.05) 0%,transparent 60%);
+  top:50%; right:-100px; transform:translateY(-50%);
+  pointer-events:none;
+}
+
+.book-header{
+  padding:0 64px; margin-bottom:48px;
+}
+@media(max-width:900px){ .book-header{ padding:0 24px; } }
+
+/* Book viewer shell */
+.book-viewer {
+  display:flex; align-items:center; justify-content:center;
+  gap:0; position:relative;
+  user-select:none;
+}
+
+.book-nav-btn {
+  width:44px; height:44px; border-radius:50%;
+  background:rgba(242,237,228,0.06); border:0.5px solid rgba(242,237,228,0.1);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; transition:all 0.2s; z-index:10;
+  margin:0 16px;
+}
+@media(max-width:900px){ .book-nav-btn{ margin:0 8px; width:36px; height:36px; } }
+.book-nav-btn:hover{ background:rgba(242,237,228,0.1); border-color:rgba(242,237,228,0.2); }
+.book-nav-btn svg{ width:16px; height:16px; stroke:rgba(242,237,228,0.6); stroke-width:1.5; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+.book-nav-btn:hover svg{ stroke:var(--cream); }
+
+/* Page stack */
+.page-stack {
+  width:320px; position:relative;
+  perspective:1200px; perspective-origin:50% 50%;
+}
+@media(max-width:600px){ .page-stack{ width:272px; } }
+
+.journal-page {
+  width:320px; background:#F2EDE4; border-radius:4px;
+  color:#1C1A17; box-shadow:0 32px 72px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.3);
+  position:absolute; top:0; left:0;
+  backface-visibility:hidden;
+  transform-origin:center center;
+  transition:transform 0.55s cubic-bezier(0.23,1,0.32,1), opacity 0.4s ease;
+  overflow:hidden;
+}
+@media(max-width:600px){ .journal-page{ width:272px; } }
+
+.journal-page.active {
+  position:relative; z-index:10;
+  transform:translateY(0) rotateY(0deg) scale(1);
+  opacity:1;
+}
+.journal-page.prev {
+  z-index:5;
+  transform:translateY(0) rotateY(-8deg) translateX(-12px) scale(0.97);
+  opacity:0; pointer-events:none;
+}
+.journal-page.next {
+  z-index:5;
+  transform:translateY(0) rotateY(8deg) translateX(12px) scale(0.97);
+  opacity:0; pointer-events:none;
+}
+.journal-page.exit-left {
+  transform:translateY(-8px) rotateY(-45deg) translateX(-60px) scale(0.9);
+  opacity:0; z-index:8; pointer-events:none;
+}
+.journal-page.exit-right {
+  transform:translateY(-8px) rotateY(45deg) translateX(60px) scale(0.9);
+  opacity:0; z-index:8; pointer-events:none;
+}
+.journal-page.enter-right {
+  transform:translateY(-8px) rotateY(45deg) translateX(60px) scale(0.9);
+  opacity:0; pointer-events:none; z-index:8;
+}
+.journal-page.enter-left {
+  transform:translateY(-8px) rotateY(-45deg) translateX(-60px) scale(0.9);
+  opacity:0; pointer-events:none; z-index:8;
+}
+
+/* Page tab */
+.p-tab { position:absolute; right:-3px; top:36px; width:3px; height:28px; border-radius:0 2px 2px 0; }
+
+/* ── DAILY PAGE ── */
+.dp { padding:20px; }
+.dp-header { display:flex; justify-content:space-between; align-items:flex-end; border-bottom:0.5px solid #D8D0C6; padding-bottom:10px; margin-bottom:12px; }
+.dp-day-num { font-family:'Syne',sans-serif; font-size:28px; font-weight:800; color:#D4541A; line-height:1; }
+.dp-day-lbl { font-size:6px; letter-spacing:0.14em; text-transform:uppercase; color:#C4BAB0; margin-bottom:1px; }
+.dp-date { font-size:8px; color:#7A7167; letter-spacing:0.05em; margin-bottom:4px; }
+.xp-row2 { display:flex; align-items:center; gap:4px; }
+.xp-lbl2 { font-size:6px; color:#B8842A; font-weight:500; letter-spacing:0.1em; }
+.xp-bar { width:36px; height:2px; background:#D8D0C6; border-radius:1px; overflow:hidden; }
+.xp-fill { height:100%; background:#B8842A; border-radius:1px; }
+.dp-slabel { font-size:6px; letter-spacing:0.16em; text-transform:uppercase; color:#C4BAB0; margin-bottom:5px; }
+.dp-moods { display:flex; gap:4px; margin-bottom:10px; }
+.dp-mood { flex:1; border:0.4px solid #D8D0C6; border-radius:3px; padding:4px 2px; text-align:center; }
+/* SVG mood icons */
+.dp-mood svg { width:14px; height:14px; display:block; margin:0 auto; }
+.dp-mood.sel { border-color:#D4541A; background:#FAF0E8; }
+.dp-pb { border-left:1.5px solid #D4541A; padding:6px 8px; background:#FAF0E8; border-radius:0 3px 3px 0; margin-bottom:8px; }
+.dp-pblbl { font-size:5.5px; letter-spacing:0.16em; text-transform:uppercase; color:#D4541A; font-weight:500; margin-bottom:2px; }
+.dp-pbtxt { font-size:7.5px; font-style:italic; color:#2E2B26; line-height:1.5; }
+.dp-lines { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+.dp-line { height:0.4px; background:#D8D0C6; }
+.dp-checks { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:10px; }
+.dp-ck { border:0.3px solid #D8D0C6; border-radius:20px; padding:2.5px 6px; font-size:6.5px; color:#7A7167; display:flex; align-items:center; gap:2.5px; }
+.dp-ckb { width:3.5px; height:3.5px; border:0.4px solid #C4BAB0; border-radius:0.5px; flex-shrink:0; }
+.dp-ck.done { background:#D4541A; border-color:#D4541A; color:#fff; }
+.dp-ck.done .dp-ckb { background:#fff; border-color:#fff; }
+.dp-ev { border-left:1.5px solid #1A7A5E; padding:6px 8px; background:#EAF5F1; border-radius:0 3px 3px 0; margin-bottom:8px; }
+.dp-evlbl { font-size:5.5px; letter-spacing:0.16em; text-transform:uppercase; color:#1A7A5E; font-weight:500; margin-bottom:2px; }
+.dp-footer { display:flex; justify-content:space-between; align-items:center; padding-top:8px; border-top:0.4px solid #D8D0C6; }
+.dp-flbl { font-size:6px; color:#C4BAB0; letter-spacing:0.08em; text-transform:uppercase; }
+.dp-stars { display:flex; gap:2px; }
+.dp-star { fill:none; stroke:#D8D0C6; width:10px; height:10px; }
+.dp-star.on { fill:#B8842A; stroke:#B8842A; }
+
+/* ── SIGNAL LOST PAGE ── */
+.sl-page { padding:20px; background:#F0EAE0; }
+.sl-title { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:#1C1A17; line-height:1.05; margin-bottom:2px; }
+.sl-title span{color:#C4BAB0;}
+.sl-sub { font-size:7.5px; color:#7A7167; font-style:italic; margin-bottom:14px; border-bottom:0.4px solid #D8D0C6; padding-bottom:10px; }
+.sl-box { border:0.4px solid #D8D0C6; border-radius:3px; padding:10px; text-align:center; margin-bottom:12px; }
+.sl-box-lbl { font-size:6px; letter-spacing:0.14em; text-transform:uppercase; color:#C4BAB0; margin-bottom:6px; }
+.sl-date-ln { width:50%; height:0.4px; background:#D8D0C6; margin:0 auto; }
+.sl-chips { display:flex; flex-wrap:wrap; gap:3.5px; margin-bottom:12px; }
+.sl-chip { border:0.3px solid #D8D0C6; border-radius:20px; padding:2.5px 6px; font-size:6.5px; color:#7A7167; }
+.sl-chip.sel{border-color:#D4541A;background:#FAF0E8;color:#D4541A;}
+.sl-perm { background:#1C1A17; border-radius:3px; padding:10px; text-align:center; }
+.sl-perm-q { font-size:8.5px; color:#E8E2D8; font-style:italic; line-height:1.6; }
+.sl-perm-s { font-size:6.5px; color:#3A3830; margin-top:4px; }
+.sl-draw { border:0.3px dashed #D8D0C6; border-radius:3px; height:44px; margin-bottom:12px; }
+
+/* ── WEEKLY MAP PAGE ── */
+.wm-page { background:#F2EDE4; }
+.wm-header { background:#1C1A17; padding:14px 18px 12px; }
+.wm-lbl { font-size:5.5px; letter-spacing:0.2em; text-transform:uppercase; color:#4A4640; margin-bottom:3px; }
+.wm-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:#E8E2D8; line-height:1.1; }
+.wm-body { padding:14px 18px; }
+.wm-slabel { font-size:5.5px; letter-spacing:0.18em; text-transform:uppercase; color:#C4BAB0; margin-bottom:8px; }
+.wm-bars { display:flex; gap:3px; align-items:flex-end; height:48px; margin-bottom:4px; }
+.wm-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; height:100%; justify-content:flex-end; }
+.wm-bar { width:100%; background:#D4541A; border-radius:1px 1px 0 0; opacity:0.8; }
+.wm-bar.empty{background:#D8D0C6;opacity:1;height:4px!important;}
+.wm-bar.teal{background:#1A7A5E;}
+.wm-bday{font-size:5.5px;color:#C4BAB0;}
+.wm-refbox { border:0.4px solid #D8D0C6; border-radius:3px; padding:8px; margin:10px 0; }
+.wm-reftxt { font-size:7px; font-style:italic; color:#7A7167; line-height:1.5; margin-bottom:6px; }
+.wm-twocol { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:10px; }
+.wm-col2 { border:0.4px solid #D8D0C6; border-radius:3px; padding:7px; }
+.wm-col2-title { font-size:5.5px; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:6px; font-weight:500; }
+.wm-col2-title.a{color:#D4541A;} .wm-col2-title.t{color:#1A7A5E;}
+.wm-nxt { border:0.3px dashed #D8D0C6; border-radius:3px; padding:7px; }
+.wm-nxt-lbl { font-size:5.5px; letter-spacing:0.14em; text-transform:uppercase; color:#C4BAB0; margin-bottom:5px; }
+.wm-xprow { display:flex; align-items:center; gap:6px; margin-top:8px; border:0.3px solid #D8D0C6; border-radius:3px; padding:5px 7px; }
+.wm-xplbl { font-size:5.5px; letter-spacing:0.14em; text-transform:uppercase; color:#B8842A; font-weight:500; white-space:nowrap; }
+.wm-xpdash { flex:1; height:0.3px; background:#D8D0C6; }
+.wm-xpval { font-family:'Syne',sans-serif; font-size:12px; font-weight:700; color:#B8842A; }
+
+/* ── MONTHLY UPGRADE PAGE ── */
+.mo-page { background:#0F0E14; color:#E8E2D8; padding:20px; }
+.mo-eyebrow { font-size:5.5px; letter-spacing:0.2em; text-transform:uppercase; color:#B8842A; margin-bottom:6px; }
+.mo-title { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; color:#E8E2D8; line-height:1.05; margin-bottom:12px; }
+.mo-title span{color:#C9933A;}
+.mo-rule { height:0.3px; background:#2A2830; margin-bottom:10px; }
+.mo-body { font-size:7px; color:#4A4640; font-style:italic; line-height:1.6; margin-bottom:10px; }
+.mo-field { margin-bottom:8px; }
+.mo-flbl { font-size:5.5px; letter-spacing:0.18em; text-transform:uppercase; color:#3A3840; margin-bottom:5px; }
+.mo-fline { height:0.3px; background:#2A2830; margin-bottom:3px; }
+.mo-sg { display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-bottom:10px; }
+.mo-sgbox { border:0.3px solid #2A2830; border-radius:2px; padding:7px; }
+.mo-sgtitle { font-size:5.5px; letter-spacing:0.12em; text-transform:uppercase; font-weight:500; margin-bottom:6px; }
+.shed2{color:#C4403A;} .gain2{color:#1A7A5E;}
+.mo-card { border:0.3px dashed #2A2830; border-radius:2px; padding:8px; position:relative; margin-bottom:8px; }
+.mo-card-perf { position:absolute; top:-5px; left:8px; background:#0F0E14; font-size:5px; color:#3A3840; padding:0 3px; letter-spacing:0.08em; }
+.mo-card-title { font-family:'Syne',sans-serif; font-size:9px; font-weight:700; color:#E8E2D8; margin:4px 0 2px; }
+.mo-lvl { display:flex; align-items:center; gap:7px; padding:7px; background:#1A1820; border-radius:3px; }
+.mo-lvl-icon { display:flex; align-items:center; }
+.mo-lvl-icon svg { width:18px; height:18px; }
+.mo-lvl-name { font-family:'Syne',sans-serif; font-size:9px; font-weight:700; color:#C9933A; }
+.mo-lvl-sub { font-size:6px; color:#4A4640; margin-top:1px; }
+
+/* ── SIGNAL DROP PAGE ── */
+.sd-page { padding:20px; }
+.sd-eyebrow { font-size:5.5px; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:5px; }
+.sd-num { font-family:'Syne',sans-serif; font-size:36px; font-weight:800; line-height:0.9; margin-bottom:10px; }
+.sd-instruction { font-size:9px; font-style:italic; line-height:1.6; margin-bottom:12px; opacity:0.85; }
+.sd-canvas { border:0.4px solid rgba(255,255,255,0.18); border-radius:3px; height:100px; background:rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center; margin-bottom:10px; }
+.sd-canvas-hint { font-size:6.5px; letter-spacing:0.14em; text-transform:uppercase; opacity:0.2; }
+.sd-lines { display:flex; flex-direction:column; gap:7px; }
+.sd-line { height:0.3px; }
+.sd-footer { text-align:center; font-size:6.5px; font-style:italic; opacity:0.3; margin-top:10px; }
+
+/* Page dots */
+.page-dots { display:flex; justify-content:center; gap:6px; margin-top:20px; }
+.pdot { width:6px; height:6px; border-radius:50%; background:rgba(242,237,228,0.2); transition:all 0.25s; }
+.pdot.active { background:var(--acc); width:18px; border-radius:3px; }
+
+/* Page label */
+.page-type-label { text-align:center; margin-top:10px; font-size:10px; color:rgba(242,237,228,0.3); letter-spacing:0.12em; text-transform:uppercase; }
+
+/* ═══ SYSTEM SECTION ═══ */
+.system-section { padding:100px 64px; position:relative; }
+@media(max-width:900px){ .system-section{ padding:72px 24px; } }
+.system-section::before { content:''; position:absolute; width:500px; height:500px; background:radial-gradient(circle,rgba(26,122,94,0.06) 0%,transparent 60%); top:50%; left:-80px; transform:translateY(-50%); pointer-events:none; }
+.sys-pillars { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(242,237,228,0.05); border-radius:12px; overflow:hidden; margin-bottom:12px; }
+@media(max-width:700px){ .sys-pillars{ grid-template-columns:1fr 1fr; } }
+.sys-pillar { background:var(--dark); padding:28px 22px; position:relative; overflow:hidden; transition:background 0.25s; }
+.sys-pillar:hover{ background:var(--dark2); }
+.sys-pillar::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; opacity:0; transition:opacity 0.25s; }
+.sys-pillar:nth-child(1)::before{background:var(--acc);}
+.sys-pillar:nth-child(2)::before{background:var(--gold);}
+.sys-pillar:nth-child(3)::before{background:var(--teal);}
+.sys-pillar:nth-child(4)::before{background:rgba(242,237,228,0.4);}
+.sys-pillar:hover::before{opacity:1;}
+.sp-num { font-family:'Syne',sans-serif; font-size:9px; font-weight:700; letter-spacing:0.2em; color:rgba(242,237,228,0.12); margin-bottom:16px; }
+.sp-icon { width:24px; height:24px; margin-bottom:12px; }
+.sp-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; margin-bottom:8px; }
+.sp-desc { font-size:12px; color:rgba(242,237,228,0.4); line-height:1.6; }
+
+.levels-strip { display:flex; background:rgba(242,237,228,0.03); border:0.5px solid rgba(242,237,228,0.05); border-radius:8px; overflow:hidden; }
+@media(max-width:700px){ .levels-strip{ flex-wrap:wrap; } }
+.level-item { flex:1; padding:14px 10px; text-align:center; border-right:0.5px solid rgba(242,237,228,0.04); transition:background 0.2s; }
+.level-item:last-child{border-right:none;}
+.level-item:hover{background:rgba(242,237,228,0.04);}
+.level-item.active{background:rgba(201,147,58,0.07);}
+.li-icon { width:18px; height:18px; margin:0 auto 4px; }
+.li-name { font-size:10px; font-weight:500; margin-bottom:2px; color:rgba(242,237,228,0.6); }
+.li-name.gold{color:var(--gold);}
+.li-xp { font-size:8.5px; color:rgba(242,237,228,0.22); }
+
+/* ═══ SIGNAL LOST SECTION ═══ */
+.lost-full { padding:100px 64px; background:var(--dark2); display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+@media(max-width:900px){ .lost-full{ grid-template-columns:1fr; padding:72px 24px; gap:40px; } }
+
+.lost-mock { background:#F0EAE0; border-radius:6px; padding:22px; color:#1C1A17; box-shadow:0 36px 72px rgba(0,0,0,0.5); max-width:300px; transform:rotate(0.6deg); transition:transform 0.4s; }
+@media(max-width:900px){ .lost-mock{ max-width:100%; transform:none; } }
+.lost-mock:hover{transform:rotate(0deg);}
+
+/* ═══ MANIFESTO ═══ */
+.manifesto { padding:140px 64px; text-align:center; position:relative; overflow:hidden; }
+@media(max-width:900px){ .manifesto{ padding:100px 24px; } }
+.manifesto::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(212,84,26,0.07) 0%,transparent 70%); pointer-events:none; }
+.mf-q { font-family:'Syne',sans-serif; font-size:clamp(24px,4vw,52px); font-weight:700; line-height:1.1; letter-spacing:-0.02em; max-width:780px; margin:0 auto 24px; position:relative; z-index:1; }
+.mf-q em{color:var(--acc);font-style:normal;}
+.mf-attr{font-size:12px;color:rgba(242,237,228,0.25);letter-spacing:0.08em;}
+
+/* ═══ INSIDE GRID ═══ */
+.inside-section{padding:100px 64px;background:var(--dark2);}
+@media(max-width:900px){.inside-section{padding:72px 24px;}}
+.inside-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:rgba(242,237,228,0.04); border-radius:12px; overflow:hidden; }
+@media(max-width:900px){.inside-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:500px){.inside-grid{grid-template-columns:1fr;}}
+.ig-item { background:var(--dark); padding:28px 24px; position:relative; overflow:hidden; transition:background 0.25s; }
+.ig-item:hover{background:#17161E;}
+.ig-tag { display:inline-block; font-size:8.5px; letter-spacing:0.14em; text-transform:uppercase; padding:2.5px 7px; border-radius:2px; font-weight:500; margin-bottom:12px; }
+.t-acc{background:rgba(212,84,26,0.14);color:var(--acc);}
+.t-gold{background:rgba(201,147,58,0.11);color:var(--gold);}
+.t-teal{background:rgba(26,122,94,0.11);color:#2AAD84;}
+.t-dim{background:rgba(242,237,228,0.05);color:rgba(242,237,228,0.35);}
+.ig-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px;line-height:1.15;}
+.ig-desc{font-size:12px;color:rgba(242,237,228,0.38);line-height:1.65;}
+.ig-count{position:absolute;bottom:18px;right:20px;font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:rgba(242,237,228,0.04);letter-spacing:-0.03em;line-height:1;}
+
+/* ═══ CTA ═══ */
+.cta-section{padding:140px 64px;text-align:center;position:relative;overflow:hidden;}
+@media(max-width:900px){.cta-section{padding:100px 24px;}}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(201,147,58,0.05) 0%,transparent 70%);pointer-events:none;}
+.cta-title{font-family:'Syne',sans-serif;font-size:clamp(36px,6vw,76px);font-weight:800;line-height:0.95;letter-spacing:-0.03em;margin-bottom:20px;position:relative;z-index:1;}
+.cta-title span{color:var(--acc);}
+.cta-sub{font-size:15px;color:rgba(242,237,228,0.42);max-width:460px;margin:0 auto 44px;line-height:1.8;}
+.cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;}
+.cta-note{font-size:11px;color:rgba(242,237,228,0.18);letter-spacing:0.04em;}
+
+/* ═══ WAITLIST MODAL ═══ */
+.modal-overlay {
+  position:fixed; inset:0; z-index:500;
+  background:rgba(0,0,0,0.82);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  display:flex; align-items:center; justify-content:center;
+  padding:20px; opacity:0; pointer-events:none;
+  transition:opacity 0.35s ease;
+}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+
+.modal-box {
+  background:var(--dark2);
+  border:0.5px solid rgba(242,237,228,0.1);
+  border-radius:16px; width:100%; max-width:480px;
+  padding:40px; position:relative;
+  transform:translateY(20px) scale(0.97);
+  transition:transform 0.35s cubic-bezier(0.23,1,0.32,1);
+  /* glass top accent */
+  box-shadow:0 0 0 0.5px rgba(242,237,228,0.06), inset 0 1px 0 rgba(255,255,255,0.04), 0 40px 80px rgba(0,0,0,0.6);
+}
+.modal-overlay.open .modal-box{transform:translateY(0) scale(1);}
+
+.modal-close {
+  position:absolute; top:20px; right:20px;
+  width:32px; height:32px; border-radius:50%;
+  background:rgba(242,237,228,0.06); border:0.5px solid rgba(242,237,228,0.1);
+  display:flex; align-items:center; justify-content:center; transition:all 0.2s;
+}
+.modal-close:hover{background:rgba(242,237,228,0.1);}
+.modal-close svg{width:14px;height:14px;stroke:rgba(242,237,228,0.5);stroke-width:1.5;fill:none;stroke-linecap:round;}
+
+.modal-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(212,84,26,0.15); color:var(--acc);
+  font-size:10px; letter-spacing:0.14em; text-transform:uppercase;
+  font-weight:500; padding:4px 10px; border-radius:2px;
+  margin-bottom:16px;
+}
+.modal-badge svg{width:10px;height:10px;fill:var(--acc);}
+
+.modal-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:8px;}
+.modal-sub{font-size:13px;color:rgba(242,237,228,0.45);line-height:1.7;margin-bottom:28px;}
+.modal-sub strong{color:var(--gold);font-weight:500;}
+
+.discount-pill {
+  display:flex; align-items:center; gap:10px;
+  background:rgba(201,147,58,0.1); border:0.5px solid rgba(201,147,58,0.2);
+  border-radius:8px; padding:12px 16px; margin-bottom:24px;
+}
+.dp-pct{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--gold);line-height:1;}
+.dp-txt{font-size:12px;color:rgba(242,237,228,0.5);line-height:1.5;}
+.dp-txt strong{color:var(--cream);font-weight:500;display:block;}
+
+/* Form */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:500px){.form-row{grid-template-columns:1fr;}}
+.form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:10px;}
+.form-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(242,237,228,0.35);}
+.form-input {
+  background:rgba(242,237,228,0.05); border:0.5px solid rgba(242,237,228,0.12);
+  border-radius:6px; padding:11px 14px; color:var(--cream);
+  font-family:'DM Sans',sans-serif; font-size:14px;
+  transition:border-color 0.2s; outline:none; width:100%;
+}
+.form-input::placeholder{color:rgba(242,237,228,0.2);}
+.form-input:focus{border-color:rgba(212,84,26,0.5);background:rgba(242,237,228,0.07);}
+
+.form-submit {
+  width:100%; padding:14px; background:var(--acc); color:#fff;
+  border:none; border-radius:6px; font-family:'DM Sans',sans-serif;
+  font-size:14px; font-weight:500; letter-spacing:0.04em;
+  transition:all 0.25s; margin-top:8px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.14);
+  /* glass shimmer */
+}
+.form-submit:hover{background:var(--acc2);transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.18),0 6px 20px rgba(212,84,26,0.3);}
+
+.form-note{font-size:10px;color:rgba(242,237,228,0.2);text-align:center;margin-top:10px;}
+
+/* Success state */
+.modal-success{display:none;text-align:center;padding:20px 0;}
+.modal-success.show{display:block;}
+.ms-icon{width:48px;height:48px;background:rgba(26,122,94,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+.ms-icon svg{width:22px;height:22px;stroke:#1A7A5E;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.ms-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin-bottom:8px;}
+.ms-body{font-size:13px;color:rgba(242,237,228,0.45);line-height:1.7;}
+.ms-code{font-family:monospace;font-size:20px;color:var(--gold);font-weight:700;background:rgba(201,147,58,0.1);border:0.5px solid rgba(201,147,58,0.2);border-radius:6px;padding:10px 20px;display:inline-block;margin:16px 0;letter-spacing:0.1em;}
+
+/* ═══ FOOTER ═══ */
+footer{padding:40px 64px;border-top:0.5px solid rgba(242,237,228,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;position:relative;z-index:1;}
+@media(max-width:700px){footer{padding:32px 24px;flex-direction:column;text-align:center;gap:12px;}}
+.footer-logo{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--cream);letter-spacing:-0.02em;}
+.footer-logo span{color:var(--gold);}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap;}
+@media(max-width:700px){.footer-links{justify-content:center;}}
+.footer-links a{font-size:12px;color:rgba(242,237,228,0.22);text-decoration:none;letter-spacing:0.04em;transition:color 0.2s;}
+.footer-links a:hover{color:rgba(242,237,228,0.5);}
+.footer-copy{font-size:10px;color:rgba(242,237,228,0.14);letter-spacing:0.04em;}
+
+/* ═══ REVEAL ═══ */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">SIGNAL<span>.</span></a>
+  <div class="nav-links">
+    <a href="#how-it-works">How it works</a>
+    <a href="#inside">Pages</a>
+    <a href="#system">System</a>
+  </div>
+  <a href="#" class="nav-cta" onclick="openWaitlist(event)">Get early access →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-glow"></div><div class="hero-glow2"></div>
+  <div id="fdots"></div>
+
+  <div class="hero-text reveal">
+    <div class="eyebrow">A personal frequency log · 3-month edition</div>
+    <h1 class="hero-title">
+      Your mind<br>has a
+      <span class="acc">signal.</span><br>
+      <span class="dim">Are you reading it?</span>
+    </h1>
+    <p class="hero-sub">
+      SIGNAL is a <strong>premium physical journal</strong> designed for ADHD brains, Gen Z overthinkers, and anyone who has started seven journals and quit every single one. Built on behavioral science. <strong>Impossible to fail at.</strong>
+    </p>
+    <div class="btn-row">
+      <a href="#" class="btn-primary" onclick="openWaitlist(event)">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1v6l4 2"/><circle cx="7" cy="7" r="6"/></svg>
+        Join the waitlist
+      </a>
+      <a href="#how-it-works" class="btn-ghost">
+        See inside
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h8M8 4l3 3-3 3"/></svg>
+      </a>
+    </div>
+    <div class="hero-meta">
+      <div><div class="meta-val">90<span>d</span></div><div class="meta-lbl">complete system</div></div>
+      <div><div class="meta-val">5<span>min</span></div><div class="meta-lbl">daily minimum</div></div>
+      <div><div class="meta-val">0<span>blank</span></div><div class="meta-lbl">pages. ever.</div></div>
+    </div>
+  </div>
+
+  <div class="journal-stage reveal" style="transition-delay:0.2s">
+    <div class="journal-glow"></div>
+    <div class="journal-3d" id="j3d">
+      <div class="j-face j-pages"></div>
+      <div class="j-face j-cover">
+        <svg class="j-cover-wave" viewBox="0 0 180 18" fill="none">
+          <polyline points="0,9 10,3.5 20,13 30,5 40,11 50,2.5 60,14 70,6 80,10 90,3.5 100,12 110,7 120,13 130,3.5 140,9 150,5 160,11 170,4.5 180,9" stroke="#F2EDE4" stroke-width="0.7"/>
+        </svg>
+        <div class="j-cover-edition">3-month edition</div>
+        <div class="j-cover-title">SIG<br>NAL<span>.</span></div>
+        <div class="j-cover-rule"></div>
+        <div class="j-cover-sub">"tune in."</div>
+      </div>
+      <div class="j-face j-back"><div class="j-back-logo">signal.</div></div>
+      <div class="j-face j-spine"><div class="j-spine-text">SIGNAL · 3-MONTH</div></div>
+      <div class="j-face j-edge-top"></div>
+      <div class="j-face j-edge-bottom"></div>
+      <div class="j-ribbon"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wdiv"><svg viewBox="0 0 1440 16" fill="none"><polyline points="0,8 40,3 80,12 120,4 160,10 200,2 240,12 280,5 320,9 360,3 400,11 440,5 480,10 520,3 560,8 600,4 640,11 680,3 720,9 760,4 800,11 840,3 880,9 920,4 960,10 1000,3 1040,9 1080,5 1120,11 1160,3 1200,9 1240,4 1280,10 1320,3 1360,8 1400,4 1440,8" stroke="#F2EDE4" stroke-width="1"/></svg></div>
+
+<!-- TRUTH -->
+<section class="truth-section" id="how-it-works">
+  <div class="reveal">
+    <div class="sec-label l01">The real problem</div>
+    <h2 class="sec-title">You didn't fail<br>the journal.<br>The journal <em>failed you.</em></h2>
+    <p class="sec-body">Traditional journals were designed in 1850. For linear brains. For a world with no notifications, no doom-scrolling. If you have <strong>ADHD, anxiety, or just a very online brain</strong> — the blank page isn't freedom. It's the hardest possible starting point.</p>
+    <p class="sec-body">SIGNAL was designed with one constraint: <strong>it has to work for the brain that exists.</strong></p>
+  </div>
+  <div class="stats-grid reveal" style="transition-delay:0.15s">
+    <div class="stat-box"><div class="stat-val">Day 3</div><div class="stat-lbl">When most people quit. The novelty dies before the habit forms.</div></div>
+    <div class="stat-box"><div class="stat-val">87%</div><div class="stat-lbl">Quit because they missed one day and felt too behind to return.</div></div>
+    <div class="stat-box"><div class="stat-val">0s</div><div class="stat-lbl">Time SIGNAL gives you to stare at a blank page. Every entry is structured.</div></div>
+    <div class="stat-box"><div class="stat-val">3min</div><div class="stat-lbl">Minimum valid entry. One mood. One word. Always counts.</div></div>
+  </div>
+</section>
+
+<!-- BOOK VIEWER -->
+<section class="book-section" id="inside">
+  <div class="book-header reveal">
+    <div class="sec-label l02 gold">Inside the journal</div>
+    <h2 class="sec-title" style="margin-bottom:8px">Six kinds of pages.<br>Every one different.</h2>
+    <p class="sec-body" style="max-width:500px">Flip through the actual pages. Each type serves a different moment in your day, your week, your 90 days.</p>
+  </div>
+
+  <div class="book-viewer">
+    <!-- Left arrow -->
+    <button class="book-nav-btn" id="prevBtn" onclick="flipPage(-1)" aria-label="Previous page">
+      <svg viewBox="0 0 16 16"><path d="M10 3L5 8l5 5"/></svg>
+    </button>
+
+    <!-- Page stack -->
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <div class="page-stack" id="pageStack" style="height:480px;">
+        <!-- Pages injected by JS -->
+      </div>
+      <div class="page-dots" id="pageDots"></div>
+      <div class="page-type-label" id="pageTypeLabel">Daily signal</div>
+    </div>
+
+    <!-- Right arrow -->
+    <button class="book-nav-btn" id="nextBtn" onclick="flipPage(1)" aria-label="Next page">
+      <svg viewBox="0 0 16 16"><path d="M6 3l5 5-5 5"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wdiv" style="background:var(--dark2)"><svg viewBox="0 0 1440 16" fill="none"><polyline points="0,8 40,3 80,12 120,4 160,10 200,2 240,12 280,5 320,9 360,3 400,11 440,5 480,10 520,3 560,8 600,4 640,11 680,3 720,9 760,4 800,11 840,3 880,9 920,4 960,10 1000,3 1040,9 1080,5 1120,11 1160,3 1200,9 1240,4 1280,10 1320,3 1360,8 1400,4 1440,8" stroke="#F2EDE4" stroke-width="1"/></svg></div>
+
+<!-- SYSTEM -->
+<section class="system-section" id="system">
+  <div style="text-align:center;margin-bottom:56px;" class="reveal">
+    <div class="sec-label l03 teal" style="justify-content:center">The complete system</div>
+    <h2 class="sec-title" style="margin-bottom:12px">Five layers.<br>One coherent architecture.</h2>
+    <p class="sec-body" style="max-width:500px;margin:0 auto">Every layer serves the ones above. Miss a day — the system holds. Miss a week — the system holds. Engineered to be impossible to break.</p>
+  </div>
+
+  <div class="sys-pillars reveal">
+    <div class="sys-pillar">
+      <div class="sp-num">01</div>
+      <svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(212,84,26,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <div class="sp-title">Daily signal</div>
+      <div class="sp-desc">One page. 5–7 minutes. Minimum is 3 minutes. It always counts.</div>
+    </div>
+    <div class="sys-pillar">
+      <div class="sp-num">02</div>
+      <svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(201,147,58,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <div class="sp-title">Weekly map</div>
+      <div class="sp-desc">Every 7 days, read your pattern. Find the signal in the noise.</div>
+    </div>
+    <div class="sys-pillar">
+      <div class="sp-num">03</div>
+      <svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(26,122,94,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      <div class="sp-title">Monthly upgrade</div>
+      <div class="sp-desc">Dark pages. Identity cards. Who you were vs. who you're becoming.</div>
+    </div>
+    <div class="sys-pillar">
+      <div class="sp-num">04</div>
+      <svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(242,237,228,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+      <div class="sp-title">Signal drops</div>
+      <div class="sp-desc">8 surprise pages scattered unpredictably. Break monotony first.</div>
+    </div>
+  </div>
+
+  <div class="levels-strip reveal" style="transition-delay:0.15s">
+    <div class="level-item">
+      <svg class="li-icon" viewBox="0 0 18 18" fill="none" stroke="rgba(242,237,228,0.35)" stroke-width="1.3" stroke-linecap="round"><circle cx="9" cy="9" r="7"/><path d="M6 9h6M9 6v6"/></svg>
+      <div class="li-name">Static</div><div class="li-xp">0 XP</div>
+    </div>
+    <div class="level-item">
+      <svg class="li-icon" viewBox="0 0 18 18" fill="none" stroke="rgba(242,237,228,0.4)" stroke-width="1.3" stroke-linecap="round"><path d="M9 2v2M9 14v2M2 9h2M14 9h2M4.2 4.2l1.4 1.4M12.4 12.4l1.4 1.4M4.2 13.8l1.4-1.4M12.4 5.6l1.4-1.4"/><circle cx="9" cy="9" r="3"/></svg>
+      <div class="li-name">Tuning</div><div class="li-xp">200 XP</div>
+    </div>
+    <div class="level-item">
+      <svg class="li-icon" viewBox="0 0 18 18" fill="none" stroke="rgba(242,237,228,0.5)" stroke-width="1.3" stroke-linecap="round"><path d="M1 12s2-4 8-4 8 4 8 4"/><path d="M3 10s1.5-2.5 6-2.5S15 10 15 10"/><path d="M5 8.5S6 7 9 7s4 1.5 4 1.5"/></svg>
+      <div class="li-name">Receiving</div><div class="li-xp">500 XP</div>
+    </div>
+    <div class="level-item active">
+      <svg class="li-icon" viewBox="0 0 18 18" fill="none" stroke="#C9933A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="9,2 11.2,6.5 16,7.3 12.5,10.7 13.4,15.5 9,13.2 4.6,15.5 5.5,10.7 2,7.3 6.8,6.5"/></svg>
+      <div class="li-name gold">Amplifier</div><div class="li-xp">1000 XP</div>
+    </div>
+    <div class="level-item">
+      <svg class="li-icon" viewBox="0 0 18 18" fill="none" stroke="rgba(242,237,228,0.4)" stroke-width="1.3" stroke-linecap="round"><path d="M9 2c-1 3-4 4-6 6 2 2 5 3 6 8 1-5 4-6 6-8-2-2-5-3-6-6z"/></svg>
+      <div class="li-name">Broadcaster</div><div class="li-xp">2000 XP</div>
+    </div>
+    <div class="level-item">
+      <svg class="li-icon" viewBox="0 0 18 18" fill="none" stroke="rgba(242,237,228,0.45)" stroke-width="1.3" stroke-linecap="round"><circle cx="9" cy="9" r="3"/><path d="M9 1v2M9 15v2M1 9h2M15 9h2"/></svg>
+      <div class="li-name">Frequency</div><div class="li-xp">4000 XP</div>
+    </div>
+    <div class="level-item">
+      <svg class="li-icon" viewBox="0 0 18 18" fill="none" stroke="rgba(242,237,228,0.55)" stroke-width="1.3" stroke-linecap="round"><path d="M9 3l1.8 3.6L15 7.3l-3 2.9.7 4.1L9 12.5l-3.7 1.8.7-4.1-3-2.9 4.2-.7z"/></svg>
+      <div class="li-name">Clear</div><div class="li-xp">8000 XP</div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNAL LOST -->
+<section class="lost-full">
+  <div class="reveal">
+    <div class="sec-label l04 dim">For the hard days</div>
+    <h2 class="sec-title">Signal lost.<br><span style="opacity:0.28">And that's fine.</span></h2>
+    <p class="sec-body">When you cannot do the full page — when nothing works — the Signal Lost page asks for exactly one word. Maybe a circled state from a list. <strong>That counts. Always.</strong></p>
+    <p class="sec-body">Missing days are not failure. They are data. <strong>What were you surviving?</strong> The gap is signal too.</p>
+  </div>
+  <div class="reveal" style="transition-delay:0.15s">
+    <div class="lost-mock">
+      <div class="sl-title" style="font-size:22px;font-family:'Syne',sans-serif;font-weight:800;color:#1C1A17;line-height:1.05;margin-bottom:2px;">Signal<br><span style="color:#C4BAB0;">lost.</span></div>
+      <div style="font-size:7.5px;color:#7A7167;font-style:italic;margin-bottom:14px;border-bottom:0.4px solid #D8D0C6;padding-bottom:10px;">That's ok. This is still an entry. You're still here.</div>
+      <div style="border:0.4px solid #D8D0C6;border-radius:3px;padding:10px;text-align:center;margin-bottom:12px;"><div style="font-size:6px;letter-spacing:0.14em;text-transform:uppercase;color:#C4BAB0;margin-bottom:6px;">Today is</div><div style="width:50%;height:0.4px;background:#D8D0C6;margin:0 auto;"></div></div>
+      <div style="display:flex;flex-wrap:wrap;gap:3.5px;margin-bottom:12px;">
+        <div style="border:0.3px solid #D8D0C6;border-radius:20px;padding:2.5px 6px;font-size:6.5px;color:#7A7167;">exhausted</div>
+        <div style="border:0.3px solid #D8D0C6;border-radius:20px;padding:2.5px 6px;font-size:6.5px;color:#7A7167;">overwhelmed</div>
+        <div style="border:0.3px solid #D4541A;border-radius:20px;padding:2.5px 6px;font-size:6.5px;color:#D4541A;background:#FAF0E8;">anxious</div>
+        <div style="border:0.3px solid #D8D0C6;border-radius:20px;padding:2.5px 6px;font-size:6.5px;color:#7A7167;">numb</div>
+        <div style="border:0.3px solid #D8D0C6;border-radius:20px;padding:2.5px 6px;font-size:6.5px;color:#7A7167;">stuck</div>
+        <div style="border:0.3px solid #D8D0C6;border-radius:20px;padding:2.5px 6px;font-size:6.5px;color:#7A7167;">just busy</div>
+      </div>
+      <div style="background:#1C1A17;border-radius:3px;padding:10px;text-align:center;"><div style="font-size:8.5px;color:#E8E2D8;font-style:italic;line-height:1.6;">"I was gone. But my signal wasn't."</div><div style="font-size:6.5px;color:#3A3830;margin-top:4px;">Missing days are data, not failure.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(242,237,228,0.2);margin-bottom:28px;" class="reveal">The philosophy</div>
+  <h2 class="mf-q reveal" style="transition-delay:0.1s">"You didn't need more discipline.<br>You needed a system <em>built for your brain.</em>"</h2>
+  <div class="mf-attr reveal" style="transition-delay:0.2s">— the reason SIGNAL exists</div>
+</section>
+
+<!-- INSIDE -->
+<section class="inside-section" id="about">
+  <div class="sec-label l05" style="margin-bottom:12px;" class="reveal">Everything inside</div>
+  <h2 class="sec-title reveal" style="margin-bottom:44px">A complete 3-month<br>transformation system.</h2>
+  <div class="inside-grid reveal" style="transition-delay:0.1s">
+    <div class="ig-item"><div class="ig-tag t-acc">Activation</div><div class="ig-title">Goals + Identity</div><div class="ig-desc">North star goal. Identity card 00. A sealed letter to your future self. The only journal that begins with a ritual.</div><div class="ig-count">00</div></div>
+    <div class="ig-item"><div class="ig-tag t-gold">Daily</div><div class="ig-title">90 daily pages</div><div class="ig-desc">90 unique prompts. 17 rotating bonus formats. Zero blank pages. Always structured, never repetitive.</div><div class="ig-count">90</div></div>
+    <div class="ig-item"><div class="ig-tag t-teal">Weekly</div><div class="ig-title">12 frequency maps</div><div class="ig-desc">7-bar mood visualization. Pattern reflection. Booster/drainer split. The weekly ritual that makes patterns visible.</div><div class="ig-count">12</div></div>
+    <div class="ig-item"><div class="ig-tag t-dim">Monthly</div><div class="ig-title">3 identity upgrades</div><div class="ig-desc">Dark pages. Shedding/gaining exercise. Tear-out identity cards. The monthly ceremony of who you're becoming.</div><div class="ig-count">03</div></div>
+    <div class="ig-item"><div class="ig-tag t-gold">Bonus</div><div class="ig-title">4 bonus tools</div><div class="ig-desc">Mind Dump. Deep Dive. Reading log. Signal Network. Use any time, for any reason.</div><div class="ig-count">04</div></div>
+    <div class="ig-item"><div class="ig-tag t-acc">The Vault</div><div class="ig-title">Sealed final pages</div><div class="ig-desc">Opened only on the last page. Then &amp; Now. Final identity card. Graduation ritual. The distance between who wrote it and who reads it is the whole point.</div><div class="ig-count" style="font-size:20px;bottom:22px;">sealed</div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="get">
+  <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;" class="reveal">Start your signal</div>
+  <h2 class="cta-title reveal" style="transition-delay:0.05s">90 days.<br>One journal.<br><span>Real change.</span></h2>
+  <p class="cta-sub reveal" style="transition-delay:0.1s">Not another journal you'll quit. A system engineered so that showing up — in any form — always counts. The only thing left to do is start.</p>
+  <div class="cta-actions reveal" style="transition-delay:0.15s">
+    <a href="#" class="btn-primary" style="font-size:15px;padding:16px 32px;" onclick="openWaitlist(event)">
+      Join the waitlist — get 20% off
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h8M8 4l3 3-3 3"/></svg>
+    </a>
+    <a href="#inside" class="btn-ghost" style="font-size:15px;padding:16px 32px;">See all pages</a>
+  </div>
+  <div class="cta-note reveal" style="transition-delay:0.2s">A5 hardcover · Lay-flat binding · 200 pages · Amber ribbon · Matte cover</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">SIGNAL<span>.</span></div>
+  <div class="footer-links">
+    <a href="#">About</a>
+    <a href="#inside">Pages</a>
+    <a href="#system">System</a>
+    <a href="#" onclick="openWaitlist(event)">Waitlist</a>
+  </div>
+  <div class="footer-copy">© 2026 SIGNAL. · A personal frequency log</div>
+</footer>
+
+<!-- WAITLIST MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close" onclick="closeWaitlist()">
+      <svg viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg>
+    </button>
+
+    <div id="modalForm">
+      <div class="modal-badge">
+        <svg viewBox="0 0 10 10"><polygon points="5,1 6.2,3.6 9,4 7,6 7.5,8.8 5,7.5 2.5,8.8 3,6 1,4 3.8,3.6"/></svg>
+        Early access
+      </div>
+      <h2 class="modal-title">Join the waitlist.<br>Get 20% off launch.</h2>
+      <p class="modal-sub">SIGNAL is almost ready. Be first in line — and get an exclusive <strong>launch discount + your city's first batch</strong> shipped to you directly.</p>
+
+      <div class="discount-pill">
+        <div class="dp-pct">20%</div>
+        <div class="dp-txt"><strong>Launch discount — yours free</strong>Just for being early. Applied automatically at checkout.</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First name</label>
+          <input class="form-input" type="text" id="f-name" placeholder="Your name" autocomplete="given-name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">City</label>
+          <input class="form-input" type="text" id="f-city" placeholder="Your city" autocomplete="address-level2">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="f-email" placeholder="you@email.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">WhatsApp / Phone <span style="color:rgba(242,237,228,0.2);font-size:9px;">(optional — for city-batch updates)</span></label>
+        <input class="form-input" type="tel" id="f-phone" placeholder="+91 98765 43210" autocomplete="tel">
+      </div>
+      <button class="form-submit" onclick="submitWaitlist()">Secure my spot + 20% off →</button>
+      <div class="form-note">No spam. Ever. Just launch updates and your discount code.</div>
+    </div>
+
+    <div class="modal-success" id="modalSuccess">
+      <div class="ms-icon">
+        <svg viewBox="0 0 22 22"><path d="M4 11l5 5 9-9"/></svg>
+      </div>
+      <h3 class="ms-title">You're in.</h3>
+      <p class="ms-body">Your spot is locked. Your 20% discount code is:</p>
+      <div class="ms-code" id="discountCode">SIGNAL20</div>
+      <p class="ms-body" style="margin-top:8px;">We'll reach out when SIGNAL launches in your city.<br>Thank you for believing in this before anyone else.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══ NAV SCROLL ══ */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50), {passive:true});
+
+/* ══ REVEAL ══ */
+const ro = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ══ PARALLAX JOURNAL ══ */
+const j3d = document.getElementById('j3d');
+let lastX=0, lastY=0;
+function onMove(cx,cy) {
+  const dx=(cx-window.innerWidth/2)/window.innerWidth;
+  const dy=(cy-window.innerHeight/2)/window.innerHeight;
+  lastX+=((-28+dx*14)-lastX)*0.08;
+  lastY+=((8-dy*6)-lastY)*0.08;
+  if(j3d) j3d.style.transform=`rotateX(${lastY}deg) rotateY(${lastX}deg) rotateZ(${dx*0.8}deg)`;
+}
+document.addEventListener('mousemove', e => onMove(e.clientX,e.clientY), {passive:true});
+document.addEventListener('touchmove', e => { if(e.touches[0]) onMove(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
+(function animJ(){ requestAnimationFrame(animJ); })();
+
+/* ══ FLOATING DOTS ══ */
+const fd = document.getElementById('fdots');
+if(fd){
+  const colors=['rgba(212,84,26,0.35)','rgba(201,147,58,0.25)','rgba(242,237,228,0.12)'];
+  for(let i=0;i<18;i++){
+    const d=document.createElement('div');d.className='f-dot';
+    const s=Math.random()*2.5+1;
+    d.style.cssText=`width:${s}px;height:${s}px;background:${colors[Math.floor(Math.random()*3)]};left:${Math.random()*100}%;animation-duration:${9+Math.random()*12}s;animation-delay:-${Math.random()*16}s;`;
+    fd.appendChild(d);
+  }
+}
+
+/* ══ STAR SVG helper ══ */
+function starSVG(on){ return `<svg class="dp-star${on?' on':''}" viewBox="0 0 10 10"><polygon points="5,1 6.1,3.6 9,4 7,6 7.5,8.8 5,7.5 2.5,8.8 3,6 1,4 3.9,3.6"/></svg>`; }
+
+/* ══ MOOD SVG faces ══ */
+const moodSVGs = [
+  /* angry */  `<svg viewBox="0 0 16 16" fill="none" stroke="#7A7167" stroke-width="1.2" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><path d="M5 5.5l1.5 1M11 5.5l-1.5 1"/><path d="M5.5 11s.8-1.5 2.5-1.5 2.5 1.5 2.5 1.5"/></svg>`,
+  /* blank */  `<svg viewBox="0 0 16 16" fill="none" stroke="#7A7167" stroke-width="1.2" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><line x1="5.5" y1="10" x2="10.5" y2="10"/><circle cx="5.5" cy="6.5" r="0.8" fill="#7A7167"/><circle cx="10.5" cy="6.5" r="0.8" fill="#7A7167"/></svg>`,
+  /* meh */    `<svg viewBox="0 0 16 16" fill="none" stroke="#D4541A" stroke-width="1.3" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><line x1="5.5" y1="10" x2="10.5" y2="10"/><circle cx="5.5" cy="6.5" r="0.8" fill="#D4541A"/><circle cx="10.5" cy="6.5" r="0.8" fill="#D4541A"/></svg>`,
+  /* bolt */   `<svg viewBox="0 0 16 16" fill="none" stroke="#7A7167" stroke-width="1.2" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><path d="M9 3.5L6.5 8.5H9L7 12.5"/></svg>`,
+  /* wave */   `<svg viewBox="0 0 16 16" fill="none" stroke="#7A7167" stroke-width="1.2" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><path d="M5 9.5s.8 1.5 3 1.5 3-1.5 3-1.5"/><path d="M4.5 7c.5-1 2-1 2 0s1.5 1 2 0 1.5-1 2 0"/></svg>`,
+  /* sleep */  `<svg viewBox="0 0 16 16" fill="none" stroke="#7A7167" stroke-width="1.2" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><path d="M5 7h1.5L5 9.5h2.5"/><path d="M9 6h2L9 9h2.5"/><line x1="5.5" y1="11" x2="10.5" y2="11"/></svg>`,
+];
+
+/* ══ PAGE DEFINITIONS ══ */
+const PAGES = [
+  {
+    type:'Daily signal',
+    tab:'#D4541A',
+    render: () => `
+<div class="dp">
+  <div class="p-tab" style="background:#D4541A"></div>
+  <div class="dp-header">
+    <div><div class="dp-day-lbl">Day</div><div class="dp-day-num">01</div></div>
+    <div><div class="dp-date">Date _____ / _____ / _____</div><div class="xp-row2"><span class="xp-lbl2">XP</span><div class="xp-bar"><div class="xp-fill" style="width:5%"></div></div></div></div>
+  </div>
+  <div class="dp-slabel">Morning signal — how are you arriving?</div>
+  <div class="dp-moods">${moodSVGs.map((s,i)=>`<div class="dp-mood${i===0?' sel':''}">${s}</div>`).join('')}</div>
+  <div class="dp-pb"><div class="dp-pblbl">One signal</div><div class="dp-pbtxt">What is one thing you've been carrying that you haven't named yet?</div></div>
+  <div class="dp-lines"><div class="dp-line"></div><div class="dp-line"></div><div class="dp-line"></div></div>
+  <div class="dp-slabel" style="margin-top:8px">Body check</div>
+  <div class="dp-checks">
+    <div class="dp-ck"><div class="dp-ckb"></div>slept ok</div>
+    <div class="dp-ck"><div class="dp-ckb"></div>moved</div>
+    <div class="dp-ck done"><div class="dp-ckb"></div>ate well</div>
+    <div class="dp-ck"><div class="dp-ckb"></div>hydrated</div>
+    <div class="dp-ck done"><div class="dp-ckb"></div>phone-free start</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 10px">
+    <div><div class="dp-slabel">Today's one word</div><div class="dp-line"></div></div>
+    <div><div class="dp-slabel">Energy 1·2·3·4·5</div><div class="dp-line"></div></div>
+  </div>
+  <div class="dp-ev"><div class="dp-evlbl">Evening close</div><div style="font-size:7.5px;font-style:italic;color:#2E2B26;line-height:1.5">What signal did you broadcast today — and was it actually you?</div></div>
+  <div class="dp-lines" style="margin-bottom:8px"><div class="dp-line"></div><div class="dp-line"></div></div>
+  <div class="dp-footer"><span class="dp-flbl">Signal strength</span><div class="dp-stars">${[0,0,0,0,0].map((_,i)=>starSVG(false)).join('')}</div></div>
+</div>`
+  },
+  {
+    type:'Daily — Quickfire variant',
+    tab:'#D4541A',
+    render: () => `
+<div class="dp">
+  <div class="p-tab" style="background:#D4541A"></div>
+  <div class="dp-header">
+    <div><div class="dp-day-lbl">Day</div><div class="dp-day-num">06</div></div>
+    <div><div class="dp-date">Date _____ / _____ / _____</div><div class="xp-row2"><span class="xp-lbl2">XP</span><div class="xp-bar"><div class="xp-fill" style="width:30%"></div></div></div></div>
+  </div>
+  <div class="dp-slabel">Morning signal</div>
+  <div class="dp-moods">${moodSVGs.map((s,i)=>`<div class="dp-mood${i===4?' sel':''}">${s}</div>`).join('')}</div>
+  <div class="dp-pb"><div class="dp-pblbl">One signal</div><div class="dp-pbtxt">If your current mood were a weather pattern — what's actually causing it?</div></div>
+  <div class="dp-lines"><div class="dp-line"></div><div class="dp-line"></div></div>
+  <div class="dp-slabel" style="margin-top:8px">Body check</div>
+  <div class="dp-checks">
+    <div class="dp-ck done"><div class="dp-ckb"></div>slept ok</div>
+    <div class="dp-ck done"><div class="dp-ckb"></div>moved</div>
+    <div class="dp-ck"><div class="dp-ckb"></div>ate well</div>
+    <div class="dp-ck done"><div class="dp-ckb"></div>hydrated</div>
+    <div class="dp-ck"><div class="dp-ckb"></div>phone-free start</div>
+  </div>
+  <div style="margin:8px 0 10px">
+    <div class="dp-slabel">Quick fire — circle one per row</div>
+    <div style="font-size:8px;color:#2E2B26;line-height:2.3">
+      Mind: <span style="color:#7A7167">foggy · scattered · <u>clear</u> · racing · quiet</span><br>
+      Body: <span style="color:#7A7167">tense · tired · ok · <u>good</u> · restless</span><br>
+      Mood: <span style="color:#7A7167">low · flat · <u>ok</u> · up · electric</span>
+    </div>
+  </div>
+  <div class="dp-ev"><div class="dp-evlbl">Evening close</div><div style="font-size:7.5px;font-style:italic;color:#2E2B26;line-height:1.5">What did you avoid today — and what was the real reason?</div></div>
+  <div class="dp-lines" style="margin-bottom:8px"><div class="dp-line"></div><div class="dp-line"></div></div>
+  <div class="dp-footer"><span class="dp-flbl">Signal strength</span><div class="dp-stars">${[1,1,1,0,0].map((_,on)=>starSVG(on<3)).join('')}</div></div>
+</div>`
+  },
+  {
+    type:'Signal lost',
+    tab:'#C4BAB0',
+    render: () => `
+<div class="sl-page">
+  <div class="p-tab" style="background:#C4BAB0"></div>
+  <div class="sl-title">Signal<br><span>lost.</span></div>
+  <div class="sl-sub">That's ok. This is still an entry. You're still here.</div>
+  <div class="sl-box"><div class="sl-box-lbl">Today is</div><div class="sl-date-ln"></div><div style="font-size:6pt;color:#C4BAB0;font-style:italic;margin-top:5px">no full entry needed. just mark the date.</div></div>
+  <div style="font-size:5.5px;letter-spacing:0.18em;text-transform:uppercase;color:#C4BAB0;margin-bottom:6px">Circle your state — just one</div>
+  <div class="sl-chips">
+    <div class="sl-chip">exhausted</div><div class="sl-chip sel">overwhelmed</div><div class="sl-chip">numb</div>
+    <div class="sl-chip">anxious</div><div class="sl-chip">empty</div><div class="sl-chip">angry</div>
+    <div class="sl-chip">sad</div><div class="sl-chip">stuck</div><div class="sl-chip">ill</div>
+    <div class="sl-chip">just busy</div><div class="sl-chip">burnt out</div><div class="sl-chip">other</div>
+  </div>
+  <div style="font-size:5.5px;letter-spacing:0.18em;text-transform:uppercase;color:#C4BAB0;margin-bottom:5px">One word — anything</div>
+  <div style="height:0.4px;background:#D8D0C6;margin-bottom:10px"></div>
+  <div class="sl-draw"></div>
+  <div class="sl-perm"><div class="sl-perm-q">"I was gone. But my signal wasn't."</div><div class="sl-perm-s">Missing days are data, not failure. You came back. That's the point.</div></div>
+</div>`
+  },
+  {
+    type:'Weekly frequency map',
+    tab:'#B8842A',
+    render: () => `
+<div class="wm-page">
+  <div class="p-tab" style="background:#B8842A"></div>
+  <div class="wm-header"><div class="wm-lbl">Weekly frequency map · Week 01</div><div class="wm-title">Week 01 —<br>Pattern Reading</div></div>
+  <div class="wm-body">
+    <div class="wm-slabel">Signal intensity — fill in each bar</div>
+    <div class="wm-bars">
+      <div class="wm-col"><div class="wm-bar" style="height:70%"></div><div class="wm-bday">M</div></div>
+      <div class="wm-col"><div class="wm-bar" style="height:40%"></div><div class="wm-bday">T</div></div>
+      <div class="wm-col"><div class="wm-bar" style="height:85%"></div><div class="wm-bday">W</div></div>
+      <div class="wm-col"><div class="wm-bar empty"></div><div class="wm-bday">T</div></div>
+      <div class="wm-col"><div class="wm-bar" style="height:60%"></div><div class="wm-bday">F</div></div>
+      <div class="wm-col"><div class="wm-bar" style="height:75%"></div><div class="wm-bday">S</div></div>
+      <div class="wm-col"><div class="wm-bar teal" style="height:90%"></div><div class="wm-bday">S</div></div>
+    </div>
+    <div style="font-size:5.5px;color:#C4BAB0;font-style:italic;margin-bottom:10px">Empty bar = signal lost day. That's data too.</div>
+    <div class="wm-refbox">
+      <div class="wm-reftxt">Looking at this week's signal — what do the dips have in common? What caused the peaks?</div>
+      <div style="height:0.4px;background:#D8D0C6;margin-bottom:6px"></div><div style="height:0.4px;background:#D8D0C6;margin-bottom:6px"></div><div style="height:0.4px;background:#D8D0C6"></div>
+    </div>
+    <div class="wm-twocol">
+      <div class="wm-col2"><div class="wm-col2-title a">Signal boosters</div><div style="height:0.4px;background:#D8D0C6;margin-bottom:6px"></div><div style="height:0.4px;background:#D8D0C6;margin-bottom:6px"></div><div style="height:0.4px;background:#D8D0C6"></div></div>
+      <div class="wm-col2"><div class="wm-col2-title t">Signal drainers</div><div style="height:0.4px;background:#D8D0C6;margin-bottom:6px"></div><div style="height:0.4px;background:#D8D0C6;margin-bottom:6px"></div><div style="height:0.4px;background:#D8D0C6"></div></div>
+    </div>
+    <div class="wm-nxt"><div class="wm-nxt-lbl">Next week I'm tuning toward</div><div style="height:0.4px;background:#D8D0C6"></div></div>
+    <div class="wm-xprow"><div class="wm-xplbl">XP this week</div><div class="wm-xpdash"></div><div class="wm-xpval">+350</div></div>
+  </div>
+</div>`
+  },
+  {
+    type:'Monthly identity upgrade',
+    tab:'#C9933A',
+    render: () => `
+<div class="mo-page">
+  <div class="p-tab" style="background:#C9933A"></div>
+  <div class="mo-eyebrow">Section 03 · Monthly identity upgrade</div>
+  <div class="mo-title">Month 01<br><span>Upgrade.</span></div>
+  <div class="mo-rule"></div>
+  <div class="mo-body">Who were you 30 days ago — and where are the first cracks of change beginning to show?</div>
+  <div class="mo-field"><div class="mo-flbl">In one sentence: who were you at the start of this journal?</div><div class="mo-fline"></div><div class="mo-fline"></div></div>
+  <div class="mo-sg">
+    <div class="mo-sgbox"><div class="mo-sgtitle shed2">Shedding</div><div style="height:0.3px;background:#2A2830;margin-bottom:5px"></div><div style="height:0.3px;background:#2A2830;margin-bottom:5px"></div><div style="height:0.3px;background:#2A2830"></div></div>
+    <div class="mo-sgbox"><div class="mo-sgtitle gain2">Gaining</div><div style="height:0.3px;background:#2A2830;margin-bottom:5px"></div><div style="height:0.3px;background:#2A2830;margin-bottom:5px"></div><div style="height:0.3px;background:#2A2830"></div></div>
+  </div>
+  <div class="mo-card">
+    <div class="mo-card-perf">✂ identity card 01 — tear out and keep</div>
+    <div class="mo-card-title">I am becoming —</div>
+    <div style="font-size:6.5px;color:#4A4640;font-style:italic;margin-bottom:6px">Complete this. Who you're becoming right now.</div>
+    <div style="height:0.3px;background:#2A2830;margin-bottom:5px"></div><div style="height:0.3px;background:#2A2830"></div>
+    <div style="display:flex;justify-content:space-between;margin-top:6px"><div style="font-size:5.5px;color:#2A2830">DATE: ____________</div><div style="font-family:'Syne',sans-serif;font-size:5.5px;font-weight:700;color:#2A2830">SIGNAL.</div></div>
+  </div>
+  <div class="mo-lvl">
+    <div class="mo-lvl-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#C9933A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="9,2 11.2,6.5 16,7.3 12.5,10.7 13.4,15.5 9,13.2 4.6,15.5 5.5,10.7 2,7.3 6.8,6.5"/></svg></div>
+    <div><div class="mo-lvl-name">Level Up — Receiver</div><div class="mo-lvl-sub">You're starting to hear your own patterns.</div></div>
+  </div>
+</div>`
+  },
+  {
+    type:'Signal drop',
+    tab:'#D4541A',
+    render: () => `
+<div class="sd-page" style="background:#D4541A">
+  <div class="p-tab" style="background:rgba(255,255,255,0.25)"></div>
+  <div class="sd-eyebrow" style="color:rgba(255,255,255,0.5)">Signal drop</div>
+  <div class="sd-num" style="color:#fff">01</div>
+  <div class="sd-instruction" style="color:rgba(255,255,255,0.85)">Don't write. Draw your week as a weather map. No words allowed. Storms, sunshine, fog, pressure fronts — draw what it actually felt like.</div>
+  <div class="sd-canvas"><div class="sd-canvas-hint" style="color:rgba(255,255,255,0.18)">your canvas</div></div>
+  <div class="sd-footer" style="color:rgba(255,255,255,0.3)">this page counts. always.</div>
+</div>`
+  },
+];
+
+let currentPage = 0;
+let isAnimating = false;
+
+function buildPages() {
+  const stack = document.getElementById('pageStack');
+  const dots = document.getElementById('pageDots');
+  if(!stack || !dots) return;
+
+  stack.innerHTML = '';
+  // Calculate max height
+  const tempDiv = document.createElement('div');
+  tempDiv.style.cssText = 'position:absolute;visibility:hidden;top:-9999px;width:320px;';
+  document.body.appendChild(tempDiv);
+  let maxH = 0;
+  PAGES.forEach(p => {
+    tempDiv.innerHTML = p.render();
+    maxH = Math.max(maxH, tempDiv.offsetHeight);
+  });
+  document.body.removeChild(tempDiv);
+  stack.style.height = (maxH + 8) + 'px';
+
+  PAGES.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'journal-page' + (i === 0 ? ' active' : ' next');
+    div.innerHTML = p.render();
+    div.style.opacity = i === 0 ? '1' : '0';
+    stack.appendChild(div);
+  });
+
+  dots.innerHTML = '';
+  PAGES.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'pdot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goToPage(i);
+    dots.appendChild(d);
+  });
+
+  updateLabel();
+}
+
+function updateLabel() {
+  const lbl = document.getElementById('pageTypeLabel');
+  if(lbl) lbl.textContent = PAGES[currentPage].type;
+}
+
+function updateDots() {
+  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i === currentPage));
+}
+
+function flipPage(dir) {
+  if(isAnimating) return;
+  const next = currentPage + dir;
+  if(next < 0 || next >= PAGES.length) return;
+  goToPage(next, dir);
+}
+
+function goToPage(target, dir) {
+  if(isAnimating || target === currentPage) return;
+  if(dir === undefined) dir = target > currentPage ? 1 : -1;
+  isAnimating = true;
+
+  const pages = document.querySelectorAll('.journal-page');
+  const cur = pages[currentPage];
+  const nxt = pages[target];
+
+  // Exit current
+  cur.classList.remove('active');
+  cur.classList.add(dir > 0 ? 'exit-left' : 'exit-right');
+
+  // Enter next
+  nxt.classList.remove('next','prev','enter-left','enter-right');
+  nxt.classList.add(dir > 0 ? 'enter-right' : 'enter-left');
+  nxt.style.opacity = '0';
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      nxt.classList.remove('enter-left','enter-right');
+      nxt.classList.add('active');
+      nxt.style.opacity = '1';
+    });
+  });
+
+  setTimeout(() => {
+    cur.classList.remove('exit-left','exit-right');
+    cur.classList.add(dir > 0 ? 'prev' : 'next');
+    cur.style.opacity = '0';
+    currentPage = target;
+    updateDots();
+    updateLabel();
+    isAnimating = false;
+  }, 580);
+}
+
+/* Touch swipe for book */
+let touchStartX = 0;
+document.getElementById('pageStack') && document.getElementById('pageStack').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+document.getElementById('pageStack') && document.getElementById('pageStack').addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 40) flipPage(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+buildPages();
+
+/* Add touch swipe after build */
+setTimeout(() => {
+  const stack = document.getElementById('pageStack');
+  if(!stack) return;
+  stack.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+  stack.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 40) flipPage(dx < 0 ? 1 : -1);
+  }, {passive:true});
+}, 100);
+
+/* ══ WAITLIST MODAL ══ */
+function openWaitlist(e) {
+  if(e) e.preventDefault();
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeWaitlist() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if(e.target === document.getElementById('modalOverlay')) closeWaitlist();
+}
+
+function generateCode(name) {
+  const base = name ? name.toUpperCase().replace(/[^A-Z]/g,'').slice(0,4) : 'SIG';
+  return 'SIGNAL-' + base + '-20';
+}
+
+function submitWaitlist() {
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const city = document.getElementById('f-city').value.trim();
+
+  if(!name){ alert('Please enter your name'); return; }
+  if(!email || !email.includes('@')){ alert('Please enter a valid email'); return; }
+
+  // Save to localStorage
+  const entry = { name, email, phone, city, time: new Date().toISOString(), code: generateCode(name) };
+  const existing = JSON.parse(localStorage.getItem('signal_waitlist') || '[]');
+  existing.push(entry);
+  localStorage.setItem('signal_waitlist', JSON.stringify(existing));
+
+  // Show success
+  document.getElementById('discountCode').textContent = entry.code;
+  document.getElementById('modalForm').style.display = 'none';
+  document.getElementById('modalSuccess').classList.add('show');
+
+  console.log('SIGNAL waitlist entry saved:', entry);
+  // When ready for real backend: POST to your API here
+}
+
+/* Keyboard navigation */
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowLeft') flipPage(-1);
+  if(e.key === 'ArrowRight') flipPage(1);
+  if(e.key === 'Escape') closeWaitlist();
+});
+</script>
+</body>
+</html>
